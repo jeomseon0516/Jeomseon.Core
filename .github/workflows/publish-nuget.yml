@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
@@ -18,7 +19,12 @@ jobs:
         run: |
           chmod +x build.sh
           VERSION="${GITHUB_REF_NAME#v}" ./build.sh
+      - name: Log in to NuGet.org
+        id: login
+        uses: NuGet/login@v1
+        with:
+          user: a_star0516
       - name: Push to NuGet.org
         run: |
-          dotnet nuget push "artifacts~/nuget/*.nupkg" --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
-          dotnet nuget push "artifacts~/nuget/*.snupkg" --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push "artifacts~/nuget/*.nupkg" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push "artifacts~/nuget/*.snupkg" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
