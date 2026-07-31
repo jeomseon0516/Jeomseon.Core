@@ -1,7 +1,5 @@
 # Jeomseon Core
 
-Unity에서는 UPM 패키지 `com.jeomseon.core`로 설치할 수 있습니다.
-
 - `Jeomseon.Collections`: Deque, PriorityQueue 및 컬렉션 확장
 - `Jeomseon.Reflection`: 멤버 캐시, 런타임 타입 탐색 및 타입 생성
 
