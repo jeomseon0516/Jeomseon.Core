@@ -1,5 +1,10 @@
 # 변경 기록
 
+## [Unreleased]
+
+- 모든 공개 API에 XML 문서를 추가하고 문서 누락을 CI 오류로 처리합니다.
+- UPM managed plug-in에 IntelliSense용 XML 문서를 함께 배포합니다.
+
 ## [0.1.0] - 2026-07-31
 
 - Unity 비의존 Collections와 Reflection API를 별도 저장소 및 패키지로 분리했습니다.

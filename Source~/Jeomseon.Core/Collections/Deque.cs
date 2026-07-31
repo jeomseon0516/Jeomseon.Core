@@ -7,6 +7,7 @@ namespace Jeomseon.Collections
     /// <summary>
     /// 원형 배열을 사용해 양 끝 삽입과 제거를 제공하는 컬렉션입니다.
     /// </summary>
+    /// <typeparam name="T">저장할 요소의 타입입니다.</typeparam>
     public sealed class Deque<T> : IReadOnlyCollection<T>, ICollection
     {
         private const int DefaultCapacity = 4;
@@ -16,6 +17,13 @@ namespace Jeomseon.Collections
         private int _version;
         private object _syncRoot;
 
+        /// <summary>
+        /// 지정한 초기 용량으로 빈 덱을 만듭니다.
+        /// </summary>
+        /// <param name="capacity">미리 확보할 요소 수입니다.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="capacity"/>가 0보다 작습니다.
+        /// </exception>
         public Deque(int capacity = 0)
         {
             if (capacity < 0)
@@ -28,11 +36,16 @@ namespace Jeomseon.Collections
                 : new T[capacity];
         }
 
+        /// <summary>현재 덱에 저장된 요소 수를 가져옵니다.</summary>
         public int Count { get; private set; }
+
+        /// <summary>크기를 다시 늘리지 않고 저장할 수 있는 총 요소 수를 가져옵니다.</summary>
         public int Capacity => _buffer.Length;
         bool ICollection.IsSynchronized => false;
         object ICollection.SyncRoot => _syncRoot ??= new object();
 
+        /// <summary>덱의 앞쪽에 요소를 추가합니다.</summary>
+        /// <param name="item">추가할 요소입니다.</param>
         public void AddFirst(T item)
         {
             EnsureCapacity(Count + 1);
@@ -42,6 +55,8 @@ namespace Jeomseon.Collections
             _version++;
         }
 
+        /// <summary>덱의 뒤쪽에 요소를 추가합니다.</summary>
+        /// <param name="item">추가할 요소입니다.</param>
         public void AddLast(T item)
         {
             EnsureCapacity(Count + 1);
@@ -50,6 +65,9 @@ namespace Jeomseon.Collections
             _version++;
         }
 
+        /// <summary>앞쪽 요소를 제거하지 않고 반환합니다.</summary>
+        /// <returns>덱의 앞쪽 요소입니다.</returns>
+        /// <exception cref="InvalidOperationException">덱이 비어 있습니다.</exception>
         public T PeekFirst()
         {
             if (!TryPeekFirst(out T result))
@@ -60,6 +78,9 @@ namespace Jeomseon.Collections
             return result;
         }
 
+        /// <summary>뒤쪽 요소를 제거하지 않고 반환합니다.</summary>
+        /// <returns>덱의 뒤쪽 요소입니다.</returns>
+        /// <exception cref="InvalidOperationException">덱이 비어 있습니다.</exception>
         public T PeekLast()
         {
             if (!TryPeekLast(out T result))
@@ -70,6 +91,9 @@ namespace Jeomseon.Collections
             return result;
         }
 
+        /// <summary>앞쪽 요소를 제거하지 않고 가져옵니다.</summary>
+        /// <param name="result">성공하면 앞쪽 요소이고, 실패하면 기본값입니다.</param>
+        /// <returns>요소를 가져왔으면 <see langword="true"/>입니다.</returns>
         public bool TryPeekFirst(out T result)
         {
             if (Count == 0)
@@ -82,6 +106,9 @@ namespace Jeomseon.Collections
             return true;
         }
 
+        /// <summary>뒤쪽 요소를 제거하지 않고 가져옵니다.</summary>
+        /// <param name="result">성공하면 뒤쪽 요소이고, 실패하면 기본값입니다.</param>
+        /// <returns>요소를 가져왔으면 <see langword="true"/>입니다.</returns>
         public bool TryPeekLast(out T result)
         {
             if (Count == 0)
@@ -94,6 +121,9 @@ namespace Jeomseon.Collections
             return true;
         }
 
+        /// <summary>앞쪽 요소를 제거하고 반환합니다.</summary>
+        /// <returns>제거한 앞쪽 요소입니다.</returns>
+        /// <exception cref="InvalidOperationException">덱이 비어 있습니다.</exception>
         public T DequeueFirst()
         {
             if (!TryDequeueFirst(out T result))
@@ -104,6 +134,9 @@ namespace Jeomseon.Collections
             return result;
         }
 
+        /// <summary>뒤쪽 요소를 제거하고 반환합니다.</summary>
+        /// <returns>제거한 뒤쪽 요소입니다.</returns>
+        /// <exception cref="InvalidOperationException">덱이 비어 있습니다.</exception>
         public T DequeueLast()
         {
             if (!TryDequeueLast(out T result))
@@ -114,6 +147,9 @@ namespace Jeomseon.Collections
             return result;
         }
 
+        /// <summary>앞쪽 요소를 제거하고 가져옵니다.</summary>
+        /// <param name="result">성공하면 제거한 요소이고, 실패하면 기본값입니다.</param>
+        /// <returns>요소를 제거했으면 <see langword="true"/>입니다.</returns>
         public bool TryDequeueFirst(out T result)
         {
             if (!TryPeekFirst(out result))
@@ -128,6 +164,9 @@ namespace Jeomseon.Collections
             return true;
         }
 
+        /// <summary>뒤쪽 요소를 제거하고 가져옵니다.</summary>
+        /// <param name="result">성공하면 제거한 요소이고, 실패하면 기본값입니다.</param>
+        /// <returns>요소를 제거했으면 <see langword="true"/>입니다.</returns>
         public bool TryDequeueLast(out T result)
         {
             if (!TryPeekLast(out result))
@@ -146,6 +185,9 @@ namespace Jeomseon.Collections
             return true;
         }
 
+        /// <summary>동등성 비교자를 사용해 지정한 요소가 포함되어 있는지 확인합니다.</summary>
+        /// <param name="item">찾을 요소입니다.</param>
+        /// <returns>일치하는 요소가 있으면 <see langword="true"/>입니다.</returns>
         public bool Contains(T item)
         {
             EqualityComparer<T> comparer = EqualityComparer<T>.Default;
@@ -160,6 +202,12 @@ namespace Jeomseon.Collections
             return false;
         }
 
+        /// <summary>앞쪽부터 뒤쪽 순서로 요소를 배열에 복사합니다.</summary>
+        /// <param name="array">요소를 받을 배열입니다.</param>
+        /// <param name="arrayIndex">복사를 시작할 인덱스입니다.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="array"/>가 null입니다.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="arrayIndex"/>가 배열 범위를 벗어났습니다.</exception>
+        /// <exception cref="ArgumentException">대상 배열의 남은 공간이 부족합니다.</exception>
         public void CopyTo(T[] array, int arrayIndex)
         {
             if (array == null)
@@ -234,6 +282,7 @@ namespace Jeomseon.Collections
             }
         }
 
+        /// <summary>모든 요소를 제거하고 확보된 용량은 유지합니다.</summary>
         public void Clear()
         {
             if (Count == 0)
@@ -247,6 +296,9 @@ namespace Jeomseon.Collections
             _version++;
         }
 
+        /// <summary>앞쪽부터 뒤쪽 순서로 요소를 열거합니다.</summary>
+        /// <returns>덱의 열거자입니다.</returns>
+        /// <exception cref="InvalidOperationException">열거 중 덱이 변경되었습니다.</exception>
         public IEnumerator<T> GetEnumerator()
         {
             int version = _version;

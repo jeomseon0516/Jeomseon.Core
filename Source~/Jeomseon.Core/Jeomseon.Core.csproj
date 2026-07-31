@@ -7,7 +7,7 @@
     <Nullable>disable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <WarningsAsErrors>$(WarningsAsErrors);CS1591</WarningsAsErrors>
     <Deterministic>true</Deterministic>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
 

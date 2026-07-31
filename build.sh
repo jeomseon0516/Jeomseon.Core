@@ -17,7 +17,9 @@ dotnet pack "$project" --configuration "$configuration" --output "$artifacts" \
 
 mkdir -p "$plugins"
 assembly="$repository_root/Source~/Jeomseon.Core/bin/$configuration/netstandard2.1/Jeomseon.Core.dll"
+documentation="$repository_root/Source~/Jeomseon.Core/bin/$configuration/netstandard2.1/Jeomseon.Core.xml"
 cp "$assembly" "$plugins/"
+cp "$documentation" "$plugins/"
 
 dotnet run --project "$boundary_validation" --configuration Release -- \
   "$project" "$source_directory" "$assembly"

@@ -2,7 +2,7 @@
 
 ## 배포 전
 
-- [ ] 공개 API XML 문서를 완성하고 `CS1591` 억제를 제거합니다.
+- [x] 공개 API XML 문서를 완성하고 `CS1591` 누락을 CI 오류로 처리합니다.
 - [x] NuGet 패키지 ID `Jeomseon.Core`를 확인하고 `0.1.0`을 배포했습니다.
 - [x] NuGet.org Trusted Publishing을 GitHub Actions에 구성했습니다.
 - [x] OpenUPM에 `com.jeomseon.core`를 등록하고 UPM 의존성 해석을 검증했습니다.

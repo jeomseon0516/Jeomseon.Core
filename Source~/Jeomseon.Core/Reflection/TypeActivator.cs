@@ -10,6 +10,9 @@ namespace Jeomseon.Reflection
     /// </summary>
     public static class TypeActivator
     {
+        /// <summary>현재 AppDomain에서 발견한 파생 구체 타입의 인스턴스를 생성합니다.</summary>
+        /// <typeparam name="T">기준 참조 타입입니다.</typeparam>
+        /// <returns>생성에 성공한 인스턴스의 지연 시퀀스입니다.</returns>
         public static IEnumerable<T> CreateDerivedInstances<T>()
             where T : class
         {
@@ -17,6 +20,11 @@ namespace Jeomseon.Reflection
                 RuntimeTypeDiscovery.GetChildTypesFromBaseType<T>());
         }
 
+        /// <summary>현재 AppDomain에서 발견한 파생 구체 타입을 팩터리로 생성합니다.</summary>
+        /// <typeparam name="T">기준 참조 타입입니다.</typeparam>
+        /// <param name="factory">발견된 타입을 인스턴스로 변환할 팩터리입니다.</param>
+        /// <returns>생성에 성공한 인스턴스의 지연 시퀀스입니다.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="factory"/>가 null입니다.</exception>
         public static IEnumerable<T> CreateDerivedInstances<T>(Func<Type, T> factory)
             where T : class
         {
@@ -25,6 +33,9 @@ namespace Jeomseon.Reflection
                 factory);
         }
 
+        /// <summary>현재 AppDomain에서 발견한 파생 구체 타입의 생성 결과를 가져옵니다.</summary>
+        /// <typeparam name="T">기준 참조 타입입니다.</typeparam>
+        /// <returns>성공과 실패를 모두 포함한 생성 결과의 지연 시퀀스입니다.</returns>
         public static IEnumerable<TypeActivationResult<T>> CreateDerivedInstanceResults<T>()
             where T : class
         {
@@ -32,6 +43,11 @@ namespace Jeomseon.Reflection
                 RuntimeTypeDiscovery.GetChildTypesFromBaseType<T>());
         }
 
+        /// <summary>현재 AppDomain에서 발견한 파생 구체 타입을 팩터리로 생성한 결과를 가져옵니다.</summary>
+        /// <typeparam name="T">기준 참조 타입입니다.</typeparam>
+        /// <param name="factory">발견된 타입을 인스턴스로 변환할 팩터리입니다.</param>
+        /// <returns>성공과 실패를 모두 포함한 생성 결과의 지연 시퀀스입니다.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="factory"/>가 null입니다.</exception>
         public static IEnumerable<TypeActivationResult<T>> CreateDerivedInstanceResults<T>(
             Func<Type, T> factory)
             where T : class
@@ -41,6 +57,11 @@ namespace Jeomseon.Reflection
                 factory);
         }
 
+        /// <summary>지정한 타입들의 공개 매개변수 없는 생성자를 호출합니다.</summary>
+        /// <typeparam name="T">생성할 인스턴스의 기준 참조 타입입니다.</typeparam>
+        /// <param name="types">생성을 시도할 타입 시퀀스입니다.</param>
+        /// <returns>생성에 성공한 인스턴스의 지연 시퀀스입니다.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="types"/>가 null입니다.</exception>
         public static IEnumerable<T> CreateInstances<T>(IEnumerable<Type> types)
             where T : class
         {
@@ -53,6 +74,11 @@ namespace Jeomseon.Reflection
             }
         }
 
+        /// <summary>지정한 타입들의 공개 매개변수 없는 생성자를 호출한 결과를 가져옵니다.</summary>
+        /// <typeparam name="T">생성할 인스턴스의 기준 참조 타입입니다.</typeparam>
+        /// <param name="types">생성을 시도할 타입 시퀀스입니다.</param>
+        /// <returns>성공과 실패를 모두 포함한 생성 결과의 지연 시퀀스입니다.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="types"/>가 null입니다.</exception>
         public static IEnumerable<TypeActivationResult<T>> CreateInstanceResults<T>(
             IEnumerable<Type> types)
             where T : class
@@ -123,6 +149,12 @@ namespace Jeomseon.Reflection
             }
         }
 
+        /// <summary>지정한 타입들을 사용자 팩터리로 생성합니다.</summary>
+        /// <typeparam name="T">생성할 인스턴스의 기준 참조 타입입니다.</typeparam>
+        /// <param name="types">생성을 시도할 타입 시퀀스입니다.</param>
+        /// <param name="factory">각 타입을 인스턴스로 변환할 팩터리입니다.</param>
+        /// <returns>생성에 성공한 인스턴스의 지연 시퀀스입니다.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="types"/> 또는 <paramref name="factory"/>가 null입니다.</exception>
         public static IEnumerable<T> CreateInstances<T>(
             IEnumerable<Type> types,
             Func<Type, T> factory)
@@ -135,6 +167,12 @@ namespace Jeomseon.Reflection
                 select result.Instance;
         }
 
+        /// <summary>지정한 타입들을 사용자 팩터리로 생성한 결과를 가져옵니다.</summary>
+        /// <typeparam name="T">생성할 인스턴스의 기준 참조 타입입니다.</typeparam>
+        /// <param name="types">생성을 시도할 타입 시퀀스입니다.</param>
+        /// <param name="factory">각 타입을 인스턴스로 변환할 팩터리입니다.</param>
+        /// <returns>성공과 실패를 모두 포함한 생성 결과의 지연 시퀀스입니다.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="types"/> 또는 <paramref name="factory"/>가 null입니다.</exception>
         public static IEnumerable<TypeActivationResult<T>> CreateInstanceResults<T>(
             IEnumerable<Type> types,
             Func<Type, T> factory)
