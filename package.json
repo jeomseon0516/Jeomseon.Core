@@ -1,10 +1,10 @@
 {
   "name": "com.jeomseon.core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "displayName": "Jeomseon Core",
   "description": "Unity-independent collections and reflection APIs distributed as a managed plug-in.",
-  "unity": "6000.3",
-  "unityRelease": "15f1",
+  "unity": "6000.5",
+  "unityRelease": "7f1",
   "author": {
     "name": "jeomseon0516",
     "url": "https://github.com/jeomseon0516"
