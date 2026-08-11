@@ -16,7 +16,7 @@ namespace Jeomseon.Reflection
             BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 
         private static readonly ConcurrentDictionary<FieldCacheKey, FieldLookupResult>
-            Fields = new();
+            _fields = new();
 
         /// <summary>메서드가 선언된 타입에서 이름과 바인딩 옵션에 맞는 필드를 찾습니다.</summary>
         /// <param name="method">필드 검색의 기준이 되는 메서드입니다.</param>
@@ -52,7 +52,7 @@ namespace Jeomseon.Reflection
             }
 
             FieldCacheKey key = new(type, fieldName, bindingFlags);
-            return Fields
+            return _fields
                 .GetOrAdd(
                     key,
                     cacheKey => new FieldLookupResult(
