@@ -11,7 +11,7 @@ namespace Jeomseon.Reflection
     /// </summary>
     public static class RuntimeTypeDiscovery
     {
-        private static readonly ConcurrentDictionary<Assembly, Type[]> LoadableTypesByAssembly = new();
+        private static readonly ConcurrentDictionary<Assembly, Type[]> _loadableTypesByAssembly = new();
 
         /// <summary>이름으로 찾은 기준 타입에 할당 가능한 구체 클래스 이름을 가져옵니다.</summary>
         /// <param name="baseClass">기준 타입의 전체 이름 또는 단순 이름입니다.</param>
@@ -161,7 +161,7 @@ namespace Jeomseon.Reflection
 
         private static IEnumerable<Type> GetLoadableTypes(Assembly assembly)
         {
-            return LoadableTypesByAssembly.GetOrAdd(assembly, LoadTypes);
+            return _loadableTypesByAssembly.GetOrAdd(assembly, LoadTypes);
         }
 
         private static Type[] LoadTypes(Assembly assembly)
