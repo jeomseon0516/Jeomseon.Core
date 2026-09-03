@@ -3,8 +3,8 @@
   "version": "0.1.2",
   "displayName": "Jeomseon Core",
   "description": "Unity-independent collections and reflection APIs distributed as a managed plug-in.",
-  "unity": "6000.5",
-  "unityRelease": "7f1",
+  "unity": "6000.6",
+  "unityRelease": "0f1",
   "author": {
     "name": "jeomseon0516",
     "url": "https://github.com/jeomseon0516"
