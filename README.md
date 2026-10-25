@@ -10,7 +10,7 @@ Source~ 소스를 .NET 프로젝트에서 빌드/테스트하거나 UPM managed 
 
 ## 계약과 주의사항
 
-PriorityQueue는 작은 priority부터 처리합니다. UnityEngine 타입을 의존하지 않습니다. UPM은 Runtime/Plugins DLL을 소비하므로 Source~ 수정만으로 Unity DLL이 자동 갱신되지는 않습니다.
+PriorityQueue의 기본 순서는 `MinimumFirst`(작은 priority 우선)이며, `PriorityQueueOrder.MaximumFirst`로 큰 priority 우선을 선택할 수 있습니다. UnityEngine 타입을 의존하지 않습니다. UPM은 Runtime/Plugins DLL을 소비하므로 Source~ 수정만으로 Unity DLL이 자동 갱신되지는 않습니다.
 
 ## 요구 사항
 

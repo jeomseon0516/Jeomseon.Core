@@ -12,7 +12,7 @@ Build/test Source~ as .NET code or install the UPM managed plug-in. Use each col
 
 ## Contracts and limitations
 
-PriorityQueue processes lower priorities first. There is no UnityEngine dependency. UPM consumes Runtime/Plugins DLLs; editing Source~ alone does not update that DLL.
+PriorityQueue defaults to `MinimumFirst` (lower priorities first); select `PriorityQueueOrder.MaximumFirst` for higher priorities first. There is no UnityEngine dependency. UPM consumes Runtime/Plugins DLLs; editing Source~ alone does not update that DLL.
 
 ## Package requirements
 
